@@ -6,6 +6,16 @@ This command line tool allows you to convert timestamps to human-readable dateti
 
 Ensure you have [Node.js](https://nodejs.org/) installed on your machine.
 
+### From NPM Package
+
+You can install the Epoch CLI Tool from the NPM package `epoch-cli-tool`:
+
+```
+npm i -g epoch-cli-tool
+```
+
+### From Source
+
 Clone this repository:
 
 ```bash
@@ -16,7 +26,7 @@ Navigate to the project directory and install dependencies:
 
 ```bash
 cd <project-directory>
-npm install
+npm i -g
 ```
 
 ## Usage
