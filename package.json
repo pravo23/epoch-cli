@@ -1,7 +1,7 @@
 {
-  "name": "epoch-cli",
+  "name": "epoch-cli-tool",
   "version": "1.0.0",
-  "description": "",
+  "description": "CLI Tool to convert timestamps to human-readable datetime & vice versa.",
   "main": "index.js",
   "bin": {
     "epoch": "./index.js"
