@@ -8,37 +8,12 @@ const {
 } = require("./core/util");
 
 program
-  .command("ts <dt>")
-  .description(
-    `Convert human-readable datetime (Local Timezone) to timestamp : Format("<dt>") example - ${chalk.greenBright.bold("Jan 1, 1970 22:30:00")}`,
-  )
-  .action((dt) => {
-    const date = new Date(dt);
-    const localTimestamp = date.getTime();
-    const offset = date.getTimezoneOffset() * 60000;
-
-    const gmtTimestamp = localTimestamp + offset; // GMT timestamp in milliseconds
-
-    const formattedText = `
-${chalk.bold.greenBright("Local Time:")}
-${chalk.bold.greenBright(" - Epoch timestamp:")} ${chalk.yellowBright(localTimestamp / 1000)}
-${chalk.bold.greenBright(" - Timestamp in milliseconds:")} ${chalk.yellowBright(localTimestamp)}
-
-${chalk.bold.greenBright("GMT Time:")}
-${chalk.bold.greenBright(" - Epoch timestamp (seconds):")} ${chalk.yellowBright(gmtTimestamp / 1000)}
-${chalk.bold.greenBright(" - Epoch timestamp (milliseconds):")} ${chalk.yellowBright(gmtTimestamp)}
-`;
-
-    console.log(formattedText);
-  });
-
-program
-  .command("dt <ts>")
+  .command("dt <timestamp>")
   .description("Convert an timestamp to human-readable datetime")
-  .action((ts) => {
-    const isMilliSeconds = isTimestampFormatInMilliSeconds(ts);
-    const timestamp = isMilliSeconds ? Number(ts) : Number(ts) * 1000;
-    const date = new Date(timestamp);
+  .action((timestamp) => {
+    const isMilliSeconds = isTimestampFormatInMilliSeconds(timestamp);
+    const ts = isMilliSeconds ? Number(timestamp) : Number(timestamp) * 1000;
+    const date = new Date(ts);
 
     const formattedOptions = {
       weekday: "short",
@@ -63,6 +38,29 @@ program
 
     console.log(chalk.bold.greenBright("GMT Time:"));
     console.log(chalk.bold.greenBright(` - ${date.toGMTString()}\n`));
+  });
+
+program
+  .command("ts <datetime>")
+  .description(
+    `Convert human-readable datetime (Default Local Timezone) to timestamp:
+
+      \t  Example Format(<datetime>)
+
+      \t\tLocal Time:\t${chalk.greenBright.bold('"Jan 1, 1970 22:30:00"')}
+      \t\tGMT Time:\t${chalk.greenBright.bold('"Jan 1, 1970 22:30:00 GMT"')}
+`,
+  )
+  .action((datetime) => {
+    const date = new Date(datetime);
+    const localTimestamp = date.getTime();
+
+    const formattedText = `
+${chalk.bold.greenBright(" - Epoch timestamp:")} ${chalk.yellowBright(localTimestamp / 1000)}
+${chalk.bold.greenBright(" - Timestamp in milliseconds:")} ${chalk.yellowBright(localTimestamp)}
+`;
+
+    console.log(formattedText);
   });
 
 program.parse(process.argv);
